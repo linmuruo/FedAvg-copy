@@ -17,6 +17,7 @@ from models.Nets import MLP, CNNMnist, CNNCifar
 from models.Fed import FedAvg
 from models.test import test_img
 
+#a分支修改main
 
 if __name__ == '__main__':
     # parse args
