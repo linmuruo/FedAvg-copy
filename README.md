@@ -10,7 +10,7 @@ python>=3.6
 pytorch>=0.4
 
 ## Run
-直接在文件里修改123456
+
 The MLP and CNN models are produced by:
 > python [main_nn.py](main_nn.py)
 
