@@ -3,7 +3,7 @@
 # Python version: 3.6
 
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use('Agg') #在PyCharm中不显示绘图
 import matplotlib.pyplot as plt
 import copy
 import numpy as np
