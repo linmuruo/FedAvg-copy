@@ -66,10 +66,10 @@ if __name__ == '__main__':
     # 数据集加载和分割用户
     if args.dataset == 'mnist': #根据用户指定的数据集名称（MNIST 或 CIFAR-10）加载相应的训练数据集
         dataset_train = datasets.MNIST('./data/mnist/',  train=True, download=True,#训练集，数据集直接从网络下载
-        transform=transforms.Compose(
-            [transforms.ToTensor(),   #totensor转换格式
-            transforms.Normalize((0.1307,), (0.3081,))   #归一化 https://blog.csdn.net/qq_38765642/article/details/109779370?ops_request_misc=%257B%2522request%255Fid%2522%253A%25224F1AA035-47D6-4C32-AC27-49576252B20C%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=4F1AA035-47D6-4C32-AC27-49576252B20C&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-109779370-null-null.142^v100^pc_search_result_base2&utm_term=transforms.Normalize&spm=1018.2226.3001.4187
-        ]))#transform 定义数据预处理步骤，包括将图像转换为张量和归一化
+                transform=transforms.Compose([
+                    transforms.ToTensor(),   #totensor转换格式
+                    transforms.Normalize((0.1307,), (0.3081,))   #归一化 https://blog.csdn.net/qq_38765642/article/details/109779370?ops_request_misc=%257B%2522request%255Fid%2522%253A%25224F1AA035-47D6-4C32-AC27-49576252B20C%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=4F1AA035-47D6-4C32-AC27-49576252B20C&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-109779370-null-null.142^v100^pc_search_result_base2&utm_term=transforms.Normalize&spm=1018.2226.3001.4187
+                ]))#transform 定义数据预处理步骤，包括将图像转换为张量和归一化
         img_size = dataset_train[0][0].shape #img_size: 获取输入图像的大小（第一张）
     elif args.dataset == 'cifar': #根据用户指定的数据集名称（MNIST 或 CIFAR-10）加载相应的训练数据集
         transform = transforms.Compose(
@@ -95,7 +95,8 @@ if __name__ == '__main__':
             len_in *= x
         net_glob = MLP(dim_in=len_in, dim_hidden=64, dim_out=args.num_classes).to(args.device)# 这边循环是因为 通过遍历 img_size 中的每个维度 x，将 len_in 乘以该维度的大小。这实际上计算了输入图像的总特征数量
                                     #dim_out=args.num_classes: 设置输出层的维度为类别数量，通常是数据集中的类的数量（例如，MNIST 有 10 个类，CIFAR-10 有 10 个类）。
-        exit('Error: unrecognized model')
+    else:
+        exit('Error: unrecognized model111')
     print(net_glob)
 
     # 训练过程
@@ -131,7 +132,7 @@ if __name__ == '__main__':
 
     # 绘制Loss 
     #这段代码用于绘制训练过程中损失的变化，并将图像保存为 PNG 文件。以下是对每一行代码的详细解析
-    plt.figure()# plt.figure(): 创建一个新的图形窗口。每次调用此函数都会生成一个新的图形，可以在其中绘制数据。此时，所有后续的绘图命令都会在这个新创建的图形上进行
+    plt.figure() # plt.figure(): 创建一个新的图形窗口。每次调用此函数都会生成一个新的图形，可以在其中绘制数据。此时，所有后续的绘图命令都会在这个新创建的图形上进行
     plt.plot(range(len(list_loss)), list_loss)#plt.plot(...): 这是 Matplotlib 中用于绘制二维线图的函数
         # range(len(list_loss)): 生成一个从 0 到 len(list_loss)-1 的整数序列，表示每个 epoch 的索引
         # list_loss: 这是一个包含每个 epoch 平均损失的列表。list_loss 的长度与 epoch 的数量相同
