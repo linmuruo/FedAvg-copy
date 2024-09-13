@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     # 数据集加载和分割用户
     if args.dataset == 'mnist': #根据用户指定的数据集名称（MNIST 或 CIFAR-10）加载相应的训练数据集
-        dataset_train = datasets.MNIST('./data/mnist/',  train=True, download=True,#训练集，数据集直接从网络下载
+        dataset_train = datasets.MNIST('FL/FedAvg/federated-learning/data/mnist/',  train=True, download=True,#训练集，数据集直接从网络下载
                 transform=transforms.Compose([
                     transforms.ToTensor(),   #totensor转换格式
                     transforms.Normalize((0.1307,), (0.3081,))   #归一化 https://blog.csdn.net/qq_38765642/article/details/109779370?ops_request_misc=%257B%2522request%255Fid%2522%253A%25224F1AA035-47D6-4C32-AC27-49576252B20C%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=4F1AA035-47D6-4C32-AC27-49576252B20C&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-109779370-null-null.142^v100^pc_search_result_base2&utm_term=transforms.Normalize&spm=1018.2226.3001.4187
@@ -75,7 +75,7 @@ if __name__ == '__main__':
         transform = transforms.Compose(
             [transforms.ToTensor(),
              transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])#mean,std https://pytorch.org/docs/stable/generated/torch.nn.functional.normalize.html#torch.nn.functional.normalize
-        dataset_train = datasets.CIFAR10('./data/cifar', train=True, transform=transform, target_transform=None, download=True)
+        dataset_train = datasets.CIFAR10('FL/FedAvg/federated-learning/data/cifar', train=True, transform=transform, target_transform=None, download=True)
         img_size = dataset_train[0][0].shape
     else:
         exit('Error: unrecognized dataset')
@@ -140,11 +140,11 @@ if __name__ == '__main__':
     plt.xlabel('epochs')# plt.xlabel('epochs'): 设置 x 轴的标签为 "epochs"，表示横坐标所代表的含义是训练的 epoch 数
     plt.ylabel('train loss')# plt.ylabel('train loss'): 设置 y 轴的标签为 "train loss"，表示纵坐标所代表的含义是训练过程中的损失值
      #保存图像
-    plt.savefig('./log/nn_{}_{}_{}.png'.format(args.dataset, args.model, args.epochs))#plt.savefig(...): 将当前图形保存为文件
+    plt.savefig('FL/FedAvg/federated-learning/log/nn_{}_{}_{}.png'.format(args.dataset, args.model, args.epochs))#plt.savefig(...): 将当前图形保存为文件
 
     # 开始测试
     if args.dataset == 'mnist': # 检查 args.dataset 的值，以确定使用哪个数据集进行测试。如果数据集是 "mnist"，则执行对应的代码块
-        dataset_test = datasets.MNIST('./data/mnist/', train=False, download=True,# 从 PyTorch 的 torchvision 库中加载 MNIST 数据集
+        dataset_test = datasets.MNIST('FL/FedAvg/federated-learning/data/mnist/', train=False, download=True,# 从 PyTorch 的 torchvision 库中加载 MNIST 数据集
                    transform=transforms.Compose([# 对数据进行预处理
                        transforms.ToTensor(),# 将 PIL 图像或 NumPy 数组转换为 PyTorch 张量
                        transforms.Normalize((0.1307,), (0.3081,))#对图像进行标准化。这里的均值和标准差是根据 MNIST 数据集计算的，确保每张图像的像素值在训练时的分布保持一致。
@@ -154,7 +154,7 @@ if __name__ == '__main__':
         transform = transforms.Compose(
             [transforms.ToTensor(),# 将图像转换为张量
              transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])# 对 CIFAR-10 数据集进行标准化，均值和标准差均为 0.5，适用于 RGB 图像
-        dataset_test = datasets.CIFAR10('./data/cifar', train=False, transform=transform, target_transform=None, download=True)
+        dataset_test = datasets.CIFAR10('FL/FedAvg/federated-learning/data/cifar', train=False, transform=transform, target_transform=None, download=True)
                         #target_transform=None: 不对目标标签进行变换
         test_loader = DataLoader(dataset_test, batch_size=1000, shuffle=False)
     else:
